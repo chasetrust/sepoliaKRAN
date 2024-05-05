@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepolia ETH Кран</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Подключаем jQuery -->
+</head>
+<body>
+    <h1>Sepolia ETH Кран</h1>
+    <p>Добро пожаловать на кран Sepolia ETH! Введите ваш адрес ETH ниже, чтобы получить некоторую криптовалюту.</p>
+    <input type="text" id="ethAddress" placeholder="Ваш адрес ETH">
+    <button onclick="claim()">Получить ETH</button>
+
+    <div id="result"></div> <!-- Здесь будет отображаться результат запроса -->
+
+    <script>
+        function claim() {
+            var ethAddress = $("#ethAddress").val(); // Получаем адрес ETH из поля ввода
+
+            // Отправляем запрос к API крана Sepolia ETH
+            $.ajax({
+                url: "https://api.sepolia.com/claim", // URL API для запроса
+                method: "POST",
+                data: { eth_address: ethAddress }, // Передаем адрес ETH в теле запроса
+                success: function(response) {
+                    // В случае успешного запроса отображаем результат
+                    $("#result").html("Транзакция успешно отправлена! TX Hash: " + response.tx_hash);
+                },
+                error: function(xhr, status, error) {
+                    // В случае ошибки отображаем сообщение об ошибке
+                    $("#result").html("Произошла ошибка: " + error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
