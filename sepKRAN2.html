@@ -8,8 +8,8 @@
 </head>
 <body>
     <h1>Sepolia ETH Кран</h1>
-    <p>Добро пожаловать в кран Sepolia ETH уебаны! Введите ваш обосанный адрес ETH ниже, чтобы получить мусора .</p>
-    <input type="text" id="ethAddress" placeholder="ТВОЙ адрес ETH УЕБАН">
+    <p>Добро пожаловать в кран Sepolia ETH! Введите ваш адрес ETH ниже, чтобы получить ETH.</p>
+    <input type="text" id="ethAddress" placeholder="Ваш адрес ETH">
     <button onclick="claim()">Получить ETH</button>
 
     <div id="result"></div> <!-- Здесь будет отображаться результат запроса -->
@@ -23,13 +23,16 @@
                 url: "https://api.sepolia.com/claim", // URL API для запроса
                 method: "POST",
                 data: { eth_address: ethAddress }, // Передаем адрес ETH в теле запроса
+                headers: {
+                    'Origin': window.location.origin // Устанавливаем Origin в заголовке запроса
+                },
                 success: function(response) {
                     // В случае успешного запроса отображаем результат
                     $("#result").html("Транзакция успешно отправлена! TX Hash: " + response.tx_hash);
                 },
                 error: function(xhr, status, error) {
                     // В случае ошибки отображаем сообщение об ошибке
-                    $("#result").html("НЕ СУДЬБА СИБИЛЛЛЛЛА: " + error);
+                    $("#result").html("Произошла ошибка: " + error);
                 }
             });
         }
